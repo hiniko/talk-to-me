@@ -8,29 +8,40 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
-    <header>
-    </header>
-
-    <div class="container">
-    <%= yield %>
+  
+<section class="section">
+  <div class="columns">
+    <div class="column is-half is-offset-one-quarter">			
+	<h1 class="title">
+	  Talk To Me!
+	</h1>
+	<h2 class="subtitle">
+	  Make your mac talk!
+	</h2>
     </div>
+  </div>
+</section>
 
-    <footer class="footer">
-      <div class="container">
-	<div class="content has-text-centered">
-	  <p>
-	    <strong>Talk To Me!</strong> by <a href="https://shermanrose.uk/">Sherman Rose</a>. The source code is licensed
-	    <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-	    is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC ANS 4.0</a>.
-	  </p>
-	  <p>
-	    <a class="icon" href="https://github.com/hiniko/talktome">
-	      <i class="fa fa-github"></i>
-	    </a>
-	  </p>
-	</div>
+
+      <%= yield %>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+	<p>
+	  <strong>Talk To Me!</strong> by <a href="https://shermanrose.uk/">Sherman Rose</a>. The source code is licensed
+	  <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+	  is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC ANS 4.0</a>.
+	</p>
+	<p>
+	  <a class="icon" href="https://github.com/hiniko/talktome">
+	    <i class="fa fa-github"></i>
+	  </a>
+	</p>
       </div>
-    </footer>
+    </div>
+  </footer>
+
 
   </body>
 </html>
