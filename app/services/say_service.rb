@@ -1,6 +1,8 @@
 class SayService
   include AASM 
 
+  attr_reader :path
+
   aasm do 
     state :init, initial: true  
     state :error, :ready, :talking, :waiting
