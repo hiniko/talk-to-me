@@ -14,8 +14,11 @@ module ApplicationCable
 
     def verify_cookie
       if cookies.signed[:id].blank?  
+        Rails.logger.info "Rejected connection due to no cookie"
          reject_unauthorized_connection 
       end
+      Rails.logger.info "Verfied cookie for user"
+      cookies.signed[:id]
     end
 
   end
