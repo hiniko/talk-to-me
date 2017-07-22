@@ -8,6 +8,7 @@ end
 
 # State Machine Gem
 gem 'aasm'
+gem 'jquery-rails' 
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
