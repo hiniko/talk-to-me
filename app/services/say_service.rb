@@ -7,7 +7,7 @@ class SayService
     state :init, initial: true  
     state :error, :ready, :talking, :waiting
 
-    after_all_transitions :notify_users
+    after_all_transitions :notify
 
     event :run, before: :locate_say do 
       error do |e|
@@ -46,8 +46,14 @@ class SayService
       sleep args[0] 
    end
 
-   def notify_users
-     puts "Changing to #{aasm.to_state} via #{aasm.current_event}"
+   def on_notify(&block)
+     @notify_block = block  
+   end
+
+   def notify
+     if @notify_block.is_a? Proc 
+       @notify_block.call aasm.to_state, aasm.current_event
+     end
    end
 
 end
