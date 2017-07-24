@@ -36,6 +36,7 @@ class SayService
    def locate_say
       @path ||= `which say`.chop
       raise "Say not found ('#{@path}')" unless File.exist? @path 
+      Rails.logger.info "Found say binary at '#{path}'"
    end
 
    def say(*args)
