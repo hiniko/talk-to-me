@@ -2,22 +2,24 @@ $(document).ready ->
 	console.log('TalkToMe is Ready!')
 	status_button = $('#serverStatus')
 
-	status_classes = [
-		'is-success',
-		'is-primary',
-		'is-danger',
-		'is-info',
-		'is-warning'
-	]
+	status_classes = { 
+		'disconnected'  : 'is-danger',
+		'connected' 	: 'is-primary',
+		'ready' 		: 'is-success',
+		'talking'		: 'is-warning',
+		'waiting'		: 'is-info',
+	}
 
-	status_button.bind 'connected', => 
-		status_button.text "Connected"
-		status_button.removeClass(status_classes.join(' '))
-		status_button.addClass "is-primary"
+	build_callback = (status, style) ->
+		() ->
+			status = status.charAt(0).toUpperCase() + status.slice(1);
+			status_button.text status
+			status_button.removeClass(Object.values(status_classes).join(' '))
+			status_button.addClass style
 
-	status_button.bind 'disconnected', =>
-		status_button.text "Disconnected"
-		status_button.removeClass(status_classes.join(' '))
-		status_button.addClass "is-danger"
+	for status, style of status_classes
+		status_button.bind status, build_callback(status, style) 
 
-	
+
+
+
