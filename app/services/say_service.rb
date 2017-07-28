@@ -16,22 +16,26 @@ class SayService
       transitions from: :init, to: :ready
     end
 
-    event :ready do 
-      transitions from: [:talking, :waiting], to: :ready
-    end
-
     event :talk do 
-      transitions from: :ready, to: :talking, 
-        after: Proc.new { |*args| say(*args) }
+      transitions from: :ready, to: :talking
     end
 
     event :pause do 
-      transitions from: [:ready, :talking], to: :waiting,
-        after: Proc.new { |*args| wait(*args) }
+      transitions from: :talking, to: :waiting
     end
 
+    event :reset do 
+      transitions from: [:init, :waiting], to: :ready
+    end
 
   end
+
+   def say(voice, message)
+     talk 
+     `#{@path} -v #{voice} #{message}`
+     wait 1
+     reset
+   end
 
    def locate_say
       @path ||= `which say`.chop
@@ -39,12 +43,9 @@ class SayService
       Rails.logger.info "Found say binary at '#{path}'"
    end
 
-   def say(*args)
-     `say #{args[0]}`
-   end
-
-   def wait(*args)
-      sleep args[0] 
+   def wait(time)
+      pause
+      sleep time 
    end
 
    def on_notify(&block)

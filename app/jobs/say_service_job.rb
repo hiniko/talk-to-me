@@ -12,10 +12,10 @@ class SayServiceJob < ApplicationJob
     end 
     # Run service
     @service.run
-    while true 
-      # Wait for a command to be published
-      command = Redis.current.blpop "say_commands"
-      puts command.inspect
+    loop do 
+      #Wait for a command to be published
+      voice, message = JSON.parse((Redis.current.blpop "say_commands")[1]).values
+      @service.say voice, message
     end
   end
 end
