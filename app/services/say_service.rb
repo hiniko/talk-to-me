@@ -1,7 +1,7 @@
 class SayService
   include AASM 
 
-  attr_reader :path
+  attr_reader :path, :voice_options
 
   aasm do 
     state :init, initial: true  
@@ -38,9 +38,17 @@ class SayService
    end
 
    def locate_say
-      @path ||= `which say`.chop
-      raise "Say not found ('#{@path}')" unless File.exist? @path 
-      Rails.logger.info "Found say binary at '#{path}'"
+     # find bin path
+     @path ||= `which say`.chop
+     raise "Say not found ('#{@path}')" unless File.exist? @path 
+     Rails.logger.info "Found say binary at '#{path}'"
+     # Get available voices
+     raw_options = `#{@path} -v "?"`.split("\n").map {|line| line.split(/\s\s+/)}
+     @voice_options = [] 
+     raw_options.each do |option|
+        @voice_options << { voice: option[0], locale: option[1], description: option[2] }
+     end
+     Rails.logger.info "There are #{@voice_options.size} voices available" 
    end
 
    def wait(time)
@@ -57,5 +65,4 @@ class SayService
        @notify_block.call aasm.to_state, aasm.current_event
      end
    end
-
 end
