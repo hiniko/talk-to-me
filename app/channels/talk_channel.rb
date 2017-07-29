@@ -5,7 +5,7 @@ class TalkChannel < ApplicationCable::Channel
   end
 
   def options
-    options = Redis.current.get("say_service:options")
+    options = JSON.parse(Redis.current.get("say_service:options"))
     ActionCable.server.broadcast("talk:options", options)
   end
 
