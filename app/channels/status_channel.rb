@@ -3,7 +3,4 @@ class StatusChannel < ActionCable::Channel::Base
     stream_from "status"    
   end  
 
-  def receive data
-    Redis.current.lpush "say_commands", data.to_json
-  end
 end

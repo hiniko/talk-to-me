@@ -1,6 +1,5 @@
 class TalkChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "messages"
     stream_from "talk:#{params[:type]}"
   end
 
@@ -9,8 +8,8 @@ class TalkChannel < ApplicationCable::Channel
     ActionCable.server.broadcast("talk:options", options)
   end
 
-  def received(data)
-    puts data.inspect
+  def receive data
+    Redis.current.lpush "say_commands", data.to_json
   end
 
 end
