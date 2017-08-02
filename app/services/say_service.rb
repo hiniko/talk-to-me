@@ -32,7 +32,7 @@ class SayService
 
    def say(voice, message)
      talk 
-     `#{@path} -v #{voice} #{message}`
+     `#{@path} -v #{voice} "#{message.inspect}"`
      wait 1
      reset
    end
