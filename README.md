@@ -18,7 +18,7 @@ together. And CoffeeScript. Mmmmm CoffeeScript.
 ## Requirements
 
 * macOS or a system with a `say` command that responds to `-v`
-* Ruby 3.2.1
+* Ruby 2.3.1
 
 ## Usage
 
