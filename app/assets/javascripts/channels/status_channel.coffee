@@ -8,4 +8,3 @@ $(document).ready ->
       console.log "Disconnected to StatusChannel"
     received: (data) ->
       $('#serverStatus').trigger(data["status"])
-      console.log(data)

@@ -16,12 +16,5 @@ module TalkToMe
     # -- all .rb files in that directory are automatically loaded.
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
 
-    # Start the Say Service job
-    if defined?(Rails::Server)
-      config.after_initialize do
-        SayServiceJob.perform_later
-      end
-    end
-
   end
 end

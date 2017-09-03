@@ -33,7 +33,7 @@ $(document).ready ->
     send_message =  (voice, message) ->
             App.messages.send({"voice": voice, "msg": message})
             voice_message.val('')
-            message_log.push message unless message_log.includes message 
+            message_log.push message unless message_log.includes message
 
     # Setup form keyboard controls
     voice_message.on 'keydown', (event) ->
