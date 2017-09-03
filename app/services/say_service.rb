@@ -32,18 +32,21 @@ class SayService
 
    def say(voice, message)
      talk 
-     `#{@path} -v #{voice} "#{message.inspect}"`
+     `#{@wrapper_path} #{@path} -v #{voice} "#{message.inspect}"`
      wait 1
      reset
    end
 
    def locate_say
+     # The wrapper will reattach the say process to the user namespace where
+     # it can then access the audio system to make the command work 
+     @wrapper_path = Rails.root.join 'vendor', 'reattach-to-user-namespace' 
      # find bin path
      @path ||= `which say`.chop
      raise "Say not found ('#{@path}')" unless File.exist? @path 
      Rails.logger.info "Found say binary at '#{path}'"
      # Get available voices
-     raw_options = `#{@path} -v "?"`.split("\n").map {|line| line.split(/\s\s+/)}
+     raw_options = `#{@wrapper_path} #{@path} -v "?"`.split("\n").map {|line| line.split(/\s\s+/)}
      @voice_options = [] 
      raw_options.each do |option|
         @voice_options << { voice: option[0], locale: option[1], description: option[2] }
